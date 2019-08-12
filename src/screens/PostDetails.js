@@ -1,15 +1,16 @@
 import React, {Fragment} from 'react';
-import { StackActions, NavigationActions } from 'react-navigation';
 import {
     StyleSheet,
     View,
-    ScrollView
+    ScrollView,
+    Text
   } from 'react-native';
   
 import colors from "../config/colors";
 import NewsCard from '../components/NewsCard'
 
-const PostList = ({navigation}) => {
+const PostDetails = ({navigation}) => {
+    const postId = navigation.getParam('postId', '001');
     let postData = [
       {
           id: '001',
@@ -18,7 +19,7 @@ const PostList = ({navigation}) => {
             {name: 'Awesome'}
           ],
           post: [
-              {title: 'Guy saves dog from racoon',
+              {title: 'Guy saves dog from racoon Post Details',
               imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
               like: '3.3K',
               dislike: '122',
@@ -58,14 +59,13 @@ const PostList = ({navigation}) => {
         <ScrollView>
             <View style={styles.container}>
                 {
-                    postData.map((e) => {
-                        return (
+                    postData.filter(item => item.id == postId).map((e) => {
+                        return (                          
                           <NewsCard 
                               key={e.id} 
                               id={e.id}
                               postTitle={e.post[0].title}
                               postUrlImage={e.post[0].imgurl}
-                              navigation={navigation}
                           ></NewsCard>
                         )
                     })
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostList;
+export default PostDetails;

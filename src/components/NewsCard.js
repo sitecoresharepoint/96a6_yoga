@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import { StackActions, NavigationActions } from 'react-navigation';
 import {
     StyleSheet,
     View,
@@ -10,10 +11,12 @@ import {
 import colors from "../config/colors";
 import PostAction from './PostAction'
 
-const NewsCard = ({id, postUrlImage, postTitle}) => {
+const NewsCard = ({id, postUrlImage, postTitle, navigation}) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text} >{postTitle} ${id}</Text>
+            <Text style={styles.text} onPress={() => navigation.navigate('PostDetails', { postId: id })} >
+                {postTitle} ${id}
+            </Text>
             <Image
                 style={styles.gambar} 
                 source={{uri: postUrlImage}}

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { StackActions, NavigationActions } from 'react-navigation';
 import {
     StyleSheet,
     View,
@@ -12,7 +13,7 @@ import {
   import colors from "../config/colors";
   import strings from "../config/strings";
 
-  const Login = () => {
+  const Login = ({navigation}) => {
       const [password, setPassword] = useState('');
       const [email, setEmail] = useState('');
       const [errorMsg, setError] = useState('');
@@ -26,8 +27,9 @@ import {
       };
 
       handleLoginPress = () => {
-        if (email === "yoga.pradana@gmail.com" && password === "admin"){
-          alert(email + " berhasil login...");
+        if (email === "a" && password === "a"){
+          // alert(email + " berhasil login...");
+          navigation.navigate({ routeName: 'PostList' })
         }
         else{
           setEmail("");

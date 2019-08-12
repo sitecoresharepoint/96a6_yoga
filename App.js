@@ -7,6 +7,7 @@
  */
 
 import React, {Fragment} from 'react';
+import { createAppContainer } from 'react-navigation';
 import {
   StyleSheet,
   View,
@@ -17,12 +18,17 @@ import colors from "./src/config/colors"
 import Login from './src/screens/Login'
 import PostList from './src/screens/PostList'
 
+import AppNavigator from './src/route/index'
+
+const AppContainer = createAppContainer(AppNavigator);
+
 const App = () => {
   return (
-    <View>
-        <Login></Login>
-        {/* <PostList></PostList> */}
-    </View>
+    <AppContainer></AppContainer>
+    // <View>
+    //     {/* <Login></Login> */}
+    //     {/* <PostList></PostList> */}
+    // </View>
   );
 };
 
