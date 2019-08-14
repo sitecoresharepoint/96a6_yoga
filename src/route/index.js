@@ -2,10 +2,12 @@ import { createStackNavigator } from 'react-navigation';
 import Login from '../screens/Login'
 import PostList from '../screens/PostList'
 import PostDetails from '../screens/PostDetails'
+import SingleComment from '../components/comments/SingleComment'
+import CommentList from '../components/comments/CommentList'
 
 const AppNavigator = createStackNavigator({
     Home: {
-        screen: Login,
+        screen: PostList,
     },      
     PostList: {
         screen: PostList,

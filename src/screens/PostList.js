@@ -1,75 +1,44 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import {
     StyleSheet,
     View,
-    ScrollView
+    ScrollView,
+    FlatList
   } from 'react-native';
   
-import colors from "../config/colors";
+import axios from 'axios'
 import NewsCard from '../components/NewsCard'
 
 const PostList = ({navigation}) => {
-    let postData = [
-      {
-          id: '001',
-          account: [
-            {id: '1'},
-            {name: 'Awesome'}
-          ],
-          post: [
-              {title: 'Guy saves dog from racoon',
-              imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
-              like: '3.3K',
-              dislike: '122',
-              comment: '164'}
-          ]
-      },
-      {
-          id: '002',
-          account: [
-            {id: '2'},
-            {name: 'Awesome 2'}
-          ],
-          post: [
-              {title: 'Doll vs golf ball',
-              imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
-              like: '3.3K',
-              dislike: '122',
-              comment: '164'}
-          ]
-      },
-      {
-          id: '003',
-          account: [
-            {id: '3'},
-            {name: 'Awesome 3'}
-          ],
-          post: [
-              {title: 'this is content title',
-              imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
-              like: '3.3K',
-              dislike: '122',
-              comment: '164'}
-          ]
-      }
-  ];
+    const [postData, setData] = useState([]);
+
+    const fetchData = async () => {
+        const {data} = await axios({method:'GET', url: 'https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/posts'});
+        setData(data);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    
     return (
         <ScrollView>
             <View style={styles.container}>
-                {
-                    postData.map((e) => {
-                        return (
-                          <NewsCard 
-                              key={e.id} 
-                              id={e.id}
-                              postTitle={e.post[0].title}
-                              postUrlImage={e.post[0].imgurl}
-                              navigation={navigation}
-                          ></NewsCard>
-                        )
-                    })
-                }
+                <FlatList
+                    data={postData}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({item}) => (
+                      <NewsCard 
+                          key={item.id} 
+                          id={item.id}
+                          postTitle={item.post.title}
+                          postUrlImage={item.post.imgurl}
+                          navigation={navigation}
+                      ></NewsCard>                    
+                    )}
+                />
+                
             </View>
         </ScrollView>
       );  

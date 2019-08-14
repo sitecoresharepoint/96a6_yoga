@@ -52,6 +52,7 @@ import {
                             value={password}
                             onChangeText={this.handlePasswordChange}
                             placeholder={strings.PASSWORD_PLACEHOLDER}
+                            passwordMode={true}
                         />
                     <Text style={styles.warning}>{errorMsg}</Text>
                     <Button 

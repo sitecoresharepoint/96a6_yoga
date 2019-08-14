@@ -15,7 +15,7 @@ const NewsCard = ({id, postUrlImage, postTitle, navigation}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.text} onPress={() => navigation.navigate('PostDetails', { postId: id })} >
-                {postTitle} ${id}
+                {postTitle}
             </Text>
             <Image
                 style={styles.gambar} 

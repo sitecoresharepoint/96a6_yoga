@@ -1,75 +1,39 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {
     StyleSheet,
     View,
     ScrollView,
+    FlatList,
     Text
   } from 'react-native';
   
-import colors from "../config/colors";
+import axios from 'axios'
 import NewsCard from '../components/NewsCard'
+import CommentList from '../components/comments/CommentList'
 
 const PostDetails = ({navigation}) => {
-    const postId = navigation.getParam('postId', '001');
-    let postData = [
-      {
-          id: '001',
-          account: [
-            {id: '1'},
-            {name: 'Awesome'}
-          ],
-          post: [
-              {title: 'Guy saves dog from racoon Post Details',
-              imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
-              like: '3.3K',
-              dislike: '122',
-              comment: '164'}
-          ]
-      },
-      {
-          id: '002',
-          account: [
-            {id: '2'},
-            {name: 'Awesome 2'}
-          ],
-          post: [
-              {title: 'Doll vs golf ball',
-              imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
-              like: '3.3K',
-              dislike: '122',
-              comment: '164'}
-          ]
-      },
-      {
-          id: '003',
-          account: [
-            {id: '3'},
-            {name: 'Awesome 3'}
-          ],
-          post: [
-              {title: 'this is content title',
-              imgurl: 'https://4.bp.blogspot.com/-krdeTqQLML8/Wyf2oV7eedI/AAAAAAAABpI/OZ759swV7L8wWtt2pwBXIgp6aPz33r01gCLcBGAs/s400/fist%2Bapp.jpg',
-              like: '3.3K',
-              dislike: '122',
-              comment: '164'}
-          ]
-      }
-  ];
+    const postId = navigation.getParam('postId', '1');
+    const [postData, setData] = useState([]);
+    let uri = 'https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/posts/' + postId
+    const fetchData = async () => {
+        const {data} = await axios({method:'GET', url: uri});
+        setData(data);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    
     return (
         <ScrollView>
             <View style={styles.container}>
-                {
-                    postData.filter(item => item.id == postId).map((e) => {
-                        return (                          
-                          <NewsCard 
-                              key={e.id} 
-                              id={e.id}
-                              postTitle={e.post[0].title}
-                              postUrlImage={e.post[0].imgurl}
-                          ></NewsCard>
-                        )
-                    })
-                }
+                <NewsCard 
+                    key={postData.id} 
+                    id={postData.id}
+                    postTitle={postData.post ? postData.post.title : 'Loading...'}
+                    postUrlImage={postData.post ? postData.post.imgurl : 'https://res.cloudinary.com/practicaldev/image/fetch/s--bIcIUu5D--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/t7u2rdii5u9n4zyqs2aa.jpg'}
+                ></NewsCard>
+                <CommentList></CommentList>
             </View>
         </ScrollView>
       );  

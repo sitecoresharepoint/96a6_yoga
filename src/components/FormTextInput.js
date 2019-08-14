@@ -3,12 +3,13 @@ import { StyleSheet, TextInput, TextInputProps } from "react-native";
   
 import colors from "../config/colors";
 
-const FormTextInput = ({ style, ...otherProps }) => {
+const FormTextInput = ({ style, passwordMode=false, ...otherProps }) => {
     return (
         <TextInput
             selectionColor={colors.DODGER_BLUE}
             placeholderTextColor={colors.WHITE}
             style={[styles.textInput, style]}
+            secureTextEntry={passwordMode}
             {...otherProps}
         />
       );  
