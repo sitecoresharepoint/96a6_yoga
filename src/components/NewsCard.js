@@ -11,7 +11,7 @@ import {
 import colors from "../config/colors";
 import PostAction from './PostAction'
 
-const NewsCard = ({id, postUrlImage, postTitle, navigation}) => {
+const NewsCard = ({id, totalLike, totalDislike, totalComment, postUrlImage, postTitle, navigation}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.text} onPress={() => navigation.navigate('PostDetails', { postId: id })} >
@@ -21,7 +21,12 @@ const NewsCard = ({id, postUrlImage, postTitle, navigation}) => {
                 style={styles.gambar} 
                 source={{uri: postUrlImage}}
             />
-            <PostAction></PostAction>
+            <PostAction 
+                id={id}
+                totalLike={totalLike} 
+                totalDislike={totalDislike}
+                totalComment={totalComment}
+            ></PostAction>
         </View>
       );  
 }

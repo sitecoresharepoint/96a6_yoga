@@ -35,6 +35,9 @@ const PostList = ({navigation}) => {
                           postTitle={item.post.title}
                           postUrlImage={item.post.imgurl}
                           navigation={navigation}
+                          totalLike={item.post.like}
+                          totalDislike={item.post.dislike}
+                          totalComment={item.post.comment}
                       ></NewsCard>                    
                     )}
                 />

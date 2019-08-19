@@ -7,6 +7,7 @@
  */
 
 import React, {Fragment} from 'react';
+import { Provider } from 'react-redux'
 import { createAppContainer } from 'react-navigation';
 import {
   StyleSheet,
@@ -14,9 +15,7 @@ import {
   Text,
 } from 'react-native';
 
-import colors from "./src/config/colors"
-import Login from './src/screens/Login'
-import PostList from './src/screens/PostList'
+import store from './src/redux/store'
 
 import AppNavigator from './src/route/index'
 
@@ -24,7 +23,10 @@ const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => {
   return (
-    <AppContainer></AppContainer>
+    <Provider store={store}>
+      <AppContainer></AppContainer>
+    </Provider>
+    
     // <View>
     //     {/* <Login></Login> */}
     //     {/* <PostList></PostList> */}

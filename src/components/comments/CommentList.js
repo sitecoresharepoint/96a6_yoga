@@ -1,6 +1,7 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Dimensions } from "react-native";
 import { StackActions, NavigationActions } from 'react-navigation';
+import axios from 'axios'
 import {
     StyleSheet,
     View,
@@ -11,42 +12,19 @@ import {
   import SingleComment from './SingleComment'
   
 
-const CommentList = ({navigation}) => {
-    let postData = [
-        {
-            id: '001',
-            account: [
-                {
-                    id: '1',
-                    name: 'Yoga',
-                    pictUrl: 'http://placekitten.com/g/200/200'
-                }
-            ],
-            content: 'Guy saves dog from racoon Guy saves dog from racoon Guy saves dog from racoon'            
-        },
-        {
-            id: '002',
-            account: [
-                {
-                    id: '2',
-                    name: 'Taufan',
-                    pictUrl: 'http://placekitten.com/g/200/200'
-                }
-            ],
-            content: 'Serious question. Bud light? Whats up with that? We dont have beer like that here and even if we had, I think people would treat it as a joke. But its not? Is it just cheap? is it good?'   
-        },
-        {
-            id: '003',
-            account: [
-                {
-                    id: '3',
-                    name: 'Awesome',
-                    pictUrl: 'http://placekitten.com/g/200/200'
-                }
-            ],
-            content: 'Guy saves dog from racoon'   
-        }
-    ];
+const CommentList = ({postid, navigation}) => {
+    const [postData, setData] = useState([]);
+
+    let uri = 'https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/comments?postid=' + postid
+    const fetchData = async () => {
+        const {data} = await axios({method:'GET', url: uri});
+        setData(data);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -55,10 +33,9 @@ const CommentList = ({navigation}) => {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => (
                         <SingleComment 
-                            key={item.id} 
-                            // id={e.id}
-                            pictUrl={item.account[0].pictUrl}
-                            name={item.account[0].name}
+                            key={item.id}
+                            pictUrl={item.account.pictUrl}
+                            name={item.account.name}
                             content={item.content}
                             navigation={navigation}
                         ></SingleComment>                    

@@ -1,4 +1,6 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
+import { connect } from 'react-redux';
+import { incAction, decAction, defLikeAction } from '../redux/action'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowUp, faArrowDown, faCommentAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -12,23 +14,31 @@ import {
   
 import colors from "../config/colors";
 
-const PostAction = () => {
+const PostAction = ({id, totalLike, totalDislike, totalComment, increment, decrement, defaultlike, countState}) => {
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+        defaultlike(parseInt(totalLike));
+    }, []);
+
+    // defaultlike(totalLike);
+    // setCount(totalLike);
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => alert('icon-up')}
+                onPress={() => increment(countState + 1)}
             >
                 <FontAwesomeIcon icon={ faArrowUp } style={ styles.icon } size={32} />
-                <Text style={styles.text}>3.8K</Text>
+                <Text style={styles.text}>{countState}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => alert('icon-down')}
+                onPress={() => decrement(countState - 1)}
             >
                 <FontAwesomeIcon icon={ faArrowDown } style={ styles.icon } size={32} />
-                <Text style={styles.text}>508</Text>
+                <Text style={styles.text}>{totalDislike}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -36,7 +46,7 @@ const PostAction = () => {
                 onPress={() => alert('icon-comment')}
             >
                 <FontAwesomeIcon icon={ faCommentAlt } style={ styles.icon } size={32} />
-                <Text style={styles.text}>1.3K</Text>
+                <Text style={styles.text}>{totalComment}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -71,4 +81,15 @@ const styles = StyleSheet.create({
     }
 });
 
-export default PostAction;
+const mapStateToProps = (state) => ({
+    countState: state ? state.count: 0
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    increment: (e) => dispatch(incAction(e)),
+    decrement: (e) => dispatch(decAction(e)),
+    defaultlike: (e) => dispatch(defLikeAction(e))
+})
+const connection = connect(mapStateToProps, mapDispatchToProps)(PostAction)
+
+export default connection;

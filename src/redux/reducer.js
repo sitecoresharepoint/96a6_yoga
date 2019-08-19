@@ -5,9 +5,11 @@ const defaultState = {
 const myReducer = (state=defaultState, action) => {
     switch(action.type) {
         case "INCREMENT":
-            return {...state, count: action.payload + 1}
+            return {...state, count: action.payload}
         case "DECREMENT":
-            return {...state, count: action.payload - 1}
+            return {...state, count: action.payload}
+        case "DEFAULTLIKE":
+            return {...state, count: action.payload}
         default:
             return 0
     }

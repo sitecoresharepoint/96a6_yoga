@@ -32,8 +32,13 @@ const PostDetails = ({navigation}) => {
                     id={postData.id}
                     postTitle={postData.post ? postData.post.title : 'Loading...'}
                     postUrlImage={postData.post ? postData.post.imgurl : 'https://res.cloudinary.com/practicaldev/image/fetch/s--bIcIUu5D--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/t7u2rdii5u9n4zyqs2aa.jpg'}
+                    totalLike={postData.post ? postData.post.like : 0}
+                    totalDislike={postData.post ? postData.post.dislike : 0}
+                    totalComment={postData.post ? postData.post.comment : 0}
                 ></NewsCard>
-                <CommentList></CommentList>
+                <CommentList                  
+                    postid={postId}
+                ></CommentList>
             </View>
         </ScrollView>
       );  
