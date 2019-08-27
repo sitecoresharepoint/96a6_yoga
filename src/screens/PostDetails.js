@@ -10,31 +10,40 @@ import {
 import axios from 'axios'
 import NewsCard from '../components/NewsCard'
 import CommentList from '../components/comments/CommentList'
+import { getPostData } from '../redux/action'
 
 const PostDetails = ({navigation}) => {
     const postId = navigation.getParam('postId', '1');
-    const [postData, setData] = useState([]);
+    // const [postData, setData] = useState([]);
     let uri = 'https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/posts/' + postId
-    const fetchData = async () => {
-        const {data} = await axios({method:'GET', url: uri});
-        setData(data);
-    };
+    // const fetchData = async () => {
+    //     const {data} = await axios({method:'GET', url: uri});
+    //     setData(data);
+    // };
+
+    // useEffect(() => {
+    //     fetchData();
+    // }, []);
+    
+    const [{ status, postData }, makeRequest] = getPostData(uri);
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        makeRequest();
+    }, []);  
+    
     
     return (
         <ScrollView>
             <View style={styles.container}>
+            
                 <NewsCard 
-                    key={postData.id} 
-                    id={postData.id}
-                    postTitle={postData.post ? postData.post.title : 'Loading...'}
-                    postUrlImage={postData.post ? postData.post.imgurl : 'https://res.cloudinary.com/practicaldev/image/fetch/s--bIcIUu5D--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/t7u2rdii5u9n4zyqs2aa.jpg'}
-                    totalLike={postData.post ? postData.post.like : 0}
-                    totalDislike={postData.post ? postData.post.dislike : 0}
-                    totalComment={postData.post ? postData.post.comment : 0}
+                    key={postId} 
+                    id={postId}
+                    postTitle={postData ? postData.post.title : 'Loading...'}
+                    postUrlImage={postData ? postData.post.imgurl : 'https://res.cloudinary.com/practicaldev/image/fetch/s--bIcIUu5D--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/t7u2rdii5u9n4zyqs2aa.jpg'}
+                    totalLike={postData ? postData.post.like : 0}
+                    totalDislike={postData ? postData.post.dislike : 0}
+                    totalComment={postData ? postData.post.comment : 0}
                 ></NewsCard>
                 <CommentList                  
                     postid={postId}

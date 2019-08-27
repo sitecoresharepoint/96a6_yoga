@@ -21,12 +21,12 @@ const NewsCard = ({id, totalLike, totalDislike, totalComment, postUrlImage, post
                 style={styles.gambar} 
                 source={{uri: postUrlImage}}
             />
-            <PostAction 
+            {/* <PostAction 
                 id={id}
                 totalLike={totalLike} 
                 totalDislike={totalDislike}
                 totalComment={totalComment}
-            ></PostAction>
+            ></PostAction> */}
         </View>
       );  
 }

@@ -6,8 +6,8 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
-import { Provider } from 'react-redux'
+import React, {Fragment, createContext} from 'react';
+// import { Provider } from 'react-redux'
 import { createAppContainer } from 'react-navigation';
 import {
   StyleSheet,
@@ -15,7 +15,9 @@ import {
   Text,
 } from 'react-native';
 
-import store from './src/redux/store'
+// import store from './src/redux/store'
+
+// export const Store = createContext();
 
 import AppNavigator from './src/route/index'
 
@@ -23,14 +25,9 @@ const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => {
   return (
-    <Provider store={store}>
+    // <Store.Provider value={store}>
       <AppContainer></AppContainer>
-    </Provider>
-    
-    // <View>
-    //     {/* <Login></Login> */}
-    //     {/* <PostList></PostList> */}
-    // </View>
+    // </Store.Provider>    
   );
 };
 

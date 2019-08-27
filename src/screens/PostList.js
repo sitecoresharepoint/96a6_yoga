@@ -1,32 +1,30 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect, useReducer} from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { getPostData } from '../redux/action'
 import {
     StyleSheet,
     View,
+    Text,
     ScrollView,
     FlatList
   } from 'react-native';
-  
-import axios from 'axios'
+
 import NewsCard from '../components/NewsCard'
 
-const PostList = ({navigation}) => {
-    const [postData, setData] = useState([]);
 
-    const fetchData = async () => {
-        const {data} = await axios({method:'GET', url: 'https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/posts'});
-        setData(data);
-    };
+const PostList = ({navigation}) => {
+    
+    const [{ status, response }, makeRequest] = getPostData('https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/posts');
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        makeRequest();
+    }, []);  
     
     return (
         <ScrollView>
-            <View style={styles.container}>
+            <View style={styles.container}>                
                 <FlatList
-                    data={postData}
+                    data={response}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => (
                       <NewsCard 
@@ -54,4 +52,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostList;
+export default PostList

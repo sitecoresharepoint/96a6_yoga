@@ -1,7 +1,8 @@
-import { createStore, applyMiddleware } from 'redux'
-// import logger from 'redux-logger'
-import myreducer from './reducer'
+// import React, { createContext, useReducer } from "react";
+// import reducer from './reducer'
 
-const store = createStore(myreducer);
 
-export default store
+
+// const store = useReducer(reducer, initialState);
+
+// export default store
