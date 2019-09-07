@@ -18,24 +18,20 @@ const PostList = ({navigation}) => {
 
     useEffect(() => {
         makeRequest();
-    }, []);  
+        
+    }, []);      
     
     return (
         <ScrollView>
-            <View style={styles.container}>                
+            <View style={styles.container}>                            
                 <FlatList
                     data={response}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({item}) => (
                       <NewsCard 
-                          key={item.id} 
-                          id={item.id}
-                          postTitle={item.post.title}
-                          postUrlImage={item.post.imgurl}
+                          key={item.id}
                           navigation={navigation}
-                          totalLike={item.post.like}
-                          totalDislike={item.post.dislike}
-                          totalComment={item.post.comment}
+                          singlePost={item}
                       ></NewsCard>                    
                     )}
                 />

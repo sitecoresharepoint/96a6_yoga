@@ -8,6 +8,7 @@
 
 import React, {Fragment, createContext} from 'react';
 // import { Provider } from 'react-redux'
+import { StateProvider } from './src/redux/store';
 import { createAppContainer } from 'react-navigation';
 import {
   StyleSheet,
@@ -20,14 +21,15 @@ import {
 // export const Store = createContext();
 
 import AppNavigator from './src/route/index'
+import reducer, { initialState } from './src/redux/reducer'
 
 const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => {
   return (
-    // <Store.Provider value={store}>
+    <StateProvider initialState={initialState} reducer={reducer}>
       <AppContainer></AppContainer>
-    // </Store.Provider>    
+    </StateProvider>    
   );
 };
 

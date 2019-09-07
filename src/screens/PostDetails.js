@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect, useContext} from 'react';
 import {
     StyleSheet,
     View,
@@ -10,11 +10,13 @@ import {
 import axios from 'axios'
 import NewsCard from '../components/NewsCard'
 import CommentList from '../components/comments/CommentList'
-import { getPostData } from '../redux/action'
+import { getresponse, getSinglePostData } from '../redux/action'
+import { StateContext } from '../redux/store';
+import { useStateValue } from '../redux/store';
 
 const PostDetails = ({navigation}) => {
     const postId = navigation.getParam('postId', '1');
-    // const [postData, setData] = useState([]);
+    // const [response, setData] = useState([]);
     let uri = 'https://my-json-server.typicode.com/sitecoresharepoint/9gagpostdata/posts/' + postId
     // const fetchData = async () => {
     //     const {data} = await axios({method:'GET', url: uri});
@@ -24,9 +26,7 @@ const PostDetails = ({navigation}) => {
     // useEffect(() => {
     //     fetchData();
     // }, []);
-    
-    const [{ status, postData }, makeRequest] = getPostData(uri);
-
+    const [{ status, singlePost }, makeRequest] = getSinglePostData(uri);
     useEffect(() => {
         makeRequest();
     }, []);  
@@ -34,16 +34,10 @@ const PostDetails = ({navigation}) => {
     
     return (
         <ScrollView>
-            <View style={styles.container}>
-            
+            <View style={styles.container}>                                    
                 <NewsCard 
                     key={postId} 
-                    id={postId}
-                    postTitle={postData ? postData.post.title : 'Loading...'}
-                    postUrlImage={postData ? postData.post.imgurl : 'https://res.cloudinary.com/practicaldev/image/fetch/s--bIcIUu5D--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/t7u2rdii5u9n4zyqs2aa.jpg'}
-                    totalLike={postData ? postData.post.like : 0}
-                    totalDislike={postData ? postData.post.dislike : 0}
-                    totalComment={postData ? postData.post.comment : 0}
+                    singlePost={singlePost}
                 ></NewsCard>
                 <CommentList                  
                     postid={postId}

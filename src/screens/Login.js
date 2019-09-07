@@ -27,7 +27,7 @@ import {
       };
 
       handleLoginPress = () => {
-        if (email === "a" && password === "a"){
+        if (email === "admin" && password === "admin"){
           // alert(email + " berhasil login...");
           navigation.navigate({ routeName: 'PostList' })
         }

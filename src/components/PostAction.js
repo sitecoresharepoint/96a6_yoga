@@ -13,32 +13,26 @@ import {
   } from 'react-native';
   
 import colors from "../config/colors";
+import { useStateValue } from '../redux/store'
 
-const PostAction = ({id, totalLike, totalDislike, totalComment, increment, decrement, defaultlike, countState}) => {
-    const [count, setCount] = useState(0)
-
-    useEffect(() => {
-        defaultlike(parseInt(totalLike));
-    }, []);
-
-    // defaultlike(totalLike);
-    // setCount(totalLike);
+const PostAction = ({singlePost}) => {
+    const [state, dispatch] = useStateValue();
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => increment(countState + 1)}
+                onPress={() => dispatch(incAction(singlePost.id, state.response))}
             >
                 <FontAwesomeIcon icon={ faArrowUp } style={ styles.icon } size={32} />
-                <Text style={styles.text}>{countState}</Text>
+                <Text style={styles.text}>{singlePost.post ? singlePost.post.like : 0}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => decrement(countState - 1)}
+                onPress={() => alert(countState - 1)}
             >
                 <FontAwesomeIcon icon={ faArrowDown } style={ styles.icon } size={32} />
-                <Text style={styles.text}>{totalDislike}</Text>
+                <Text style={styles.text}>{singlePost.post ? singlePost.post.dislike : 0}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -46,7 +40,7 @@ const PostAction = ({id, totalLike, totalDislike, totalComment, increment, decre
                 onPress={() => alert('icon-comment')}
             >
                 <FontAwesomeIcon icon={ faCommentAlt } style={ styles.icon } size={32} />
-                <Text style={styles.text}>{totalComment}</Text>
+                <Text style={styles.text}>{singlePost.post ? singlePost.post.comment : 0}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -81,15 +75,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state) => ({
-    countState: state ? state.count: 0
-})
-
-const mapDispatchToProps = (dispatch) => ({
-    increment: (e) => dispatch(incAction(e)),
-    decrement: (e) => dispatch(decAction(e)),
-    defaultlike: (e) => dispatch(defLikeAction(e))
-})
-const connection = connect(mapStateToProps, mapDispatchToProps)(PostAction)
-
-export default connection;
+export default PostAction;

@@ -10,23 +10,21 @@ import {
   
 import colors from "../config/colors";
 import PostAction from './PostAction'
+import { useStateValue } from '../redux/store'
 
-const NewsCard = ({id, totalLike, totalDislike, totalComment, postUrlImage, postTitle, navigation}) => {
+const NewsCard = ({singlePost, navigation}) => {    
     return (
         <View style={styles.container}>
-            <Text style={styles.text} onPress={() => navigation.navigate('PostDetails', { postId: id })} >
-                {postTitle}
+            <Text style={styles.text} onPress={() => navigation.navigate('PostDetails', { postId: singlePost.id })} >
+              {singlePost.post ? singlePost.post.title : 'Loading...'}
             </Text>
             <Image
                 style={styles.gambar} 
-                source={{uri: postUrlImage}}
+                source={{uri: singlePost.post ? singlePost.post.imgurl : 'https://res.cloudinary.com/practicaldev/image/fetch/s--bIcIUu5D--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/t7u2rdii5u9n4zyqs2aa.jpg'}}
             />
-            {/* <PostAction 
-                id={id}
-                totalLike={totalLike} 
-                totalDislike={totalDislike}
-                totalComment={totalComment}
-            ></PostAction> */}
+            <PostAction 
+                singlePost={singlePost}
+            ></PostAction>
         </View>
       );  
 }

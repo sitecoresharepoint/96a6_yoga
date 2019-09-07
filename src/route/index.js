@@ -7,7 +7,7 @@ import CommentList from '../components/comments/CommentList'
 
 const AppNavigator = createStackNavigator({
     Home: {
-        screen: PostList,
+        screen: Login,
     },      
     PostList: {
         screen: PostList,
